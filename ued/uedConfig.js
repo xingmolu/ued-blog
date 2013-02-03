@@ -1,5 +1,5 @@
 //ued config
-var path = requrie('path');
+var path = require('path');
 
 exports.config = {
 	debug : true,
@@ -8,13 +8,15 @@ exports.config = {
 	version : '0.01',
 
 	site_logo : '',
-	upload_dir : path.join(__pathname,'public','user_data','images'),
+	upload_dir : path.join(__dirname,'public','user_data','images'),
 
 	//db配置
-	db : 'mongodb://127.0.0.1:25017/uedBlog',
+	dbHost : '127.0.0.1:25017',
+	dbName : 'uedBlog',
+	dbport : 25017,
 	session_secret : 'ued_blog',
 	auth_cookie_name : 'ued_blog',
-	port : 25017,
+	
 
 	//显示blog条数
 	list_topic_count : 10,
