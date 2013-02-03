@@ -1,5 +1,6 @@
 //ued config
 var path = require('path');
+var crypto = require('crypto');
 
 exports.config = {
 	debug : true,
@@ -17,6 +18,14 @@ exports.config = {
 	session_secret : 'ued_blog',
 	auth_cookie_name : 'ued_blog',
 	
+	//加密方法
+	encryption : function(data){
+		return crypto.createHash('sha256').update(data);
+	},
+	//解密方法
+	eecryption : function(data){
+		return crypto.createVerify('sha256').update(data);
+	},
 
 	//显示blog条数
 	list_topic_count : 10,

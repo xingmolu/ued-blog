@@ -19,7 +19,7 @@ Test.prototype.save = function(callback){
 			console.log('数据库打开失败');
 			return callback(err);
 		}
-		//读取user集合
+		//读取test集合
 		db.collection('test',function(err,coll){
 			if(err){
 				mongodb.close();
@@ -27,8 +27,8 @@ Test.prototype.save = function(callback){
 				return callback(err);
 			}
 			//为name键添加索引
-			coll.ensureIndex('name',{unique: true});
-			//写入user文档
+			//coll.ensureIndex({'name':1},{unique: true});
+			//写入test文档
 			
 			coll.insert(self,{sefe:true},function(err,user){
 				mongodb.close();
