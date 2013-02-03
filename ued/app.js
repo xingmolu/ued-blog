@@ -8,7 +8,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , partials = require('express-partials')
-  , uedConfig = require('./uedConfig');
+  , uedConfig = require('./uedConfig').config;
 
 uedConfig.upload_dir = uedConfig.upload_dir || path.join(__dirname, 'public', 'user_data', 'images');
 var app = express();

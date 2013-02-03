@@ -11,7 +11,7 @@ exports.config = {
 	upload_dir : path.join(__dirname,'public','user_data','images'),
 
 	//db配置
-	dbHost : '127.0.0.1:25017',
+	dbHost : '127.0.0.1',
 	dbName : 'uedBlog',
 	dbport : 25017,
 	session_secret : 'ued_blog',

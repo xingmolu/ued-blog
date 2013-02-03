@@ -1,3 +1,4 @@
+var mongodb = require('../node_modules/db');
 function User(user) {
 	// 用户bean
 	this.accountName = user.accountName;
@@ -14,5 +15,5 @@ function User(user) {
 module.exports = User;
 
 User.prototype.save = function(callback){
-	
+
 }
