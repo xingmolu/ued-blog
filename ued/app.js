@@ -30,7 +30,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser(uedConfig.session_secret));
   app.use(express.session({
-          secret:'aiblog',
+          secret:uedConfig.session_secret,
           store: storeMemory                
   }));
   app.use(app.router);
