@@ -14,5 +14,9 @@ exports.index = function(req, res){
   	console.log(err);
   	console.log(data);
   });
-  res.render('index', { title: 'Express' });
+  res.render('index', { 
+      title: 'UED微博',
+      layout:'layout',
+      user: req.session.name
+     });
 };

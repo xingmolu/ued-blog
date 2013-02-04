@@ -1,11 +1,112 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
-</html>
+<% if(!user) { %>
+	<div class="hero-unit">
+		<h1>欢迎来到<%= title%></h1>
+			<p><%= title%>是一个基于node.js的微博系统</p>
+			<p>
+				<a href="javascript:;" class="btn btn-primary btn-large loginButton">登录</a>
+				<a href="/reg" class="btn btn-large">立即注册</a>
+			</p>
+	</div>
+<% }else { %>
+	<div class="hero-unit">
+		<form method="get">
+			<textarea class="weiboTextArea"></textarea>
+		</form>
+		<button type="button" class="btn btn-primary publish">发表</button>
+	</div>
+<% } %>
+<div class="row">
+	<div class="span4">
+		<h2>愤怒的老鸟 说</h2>
+		<p>春天在哪里啊春天在哪里，春天在哪小朋友的眼睛里。</p>
+	</div>
+	<div class="span4">
+		<h2>王宝强 说</h2>
+		<p>又到一年回家时，无数个人在囧途又要上演了，铁老大啊，能给力点吗?</p>
+	</div>
+	<div class="span4">
+		<h2>春天来了 说</h2>
+		<p>今年冬天太冷了，南京啥时候可以集体供暖啊，这个冬天都冷爆了啊，建议珠江以南都集体供暖啊。</p>
+	</div>
+</div>
+
+<div class="modal hide" id="loginDialog">
+	<form class="form-horizontal" method="post" action="/login">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">x</button>
+			<h3>登录</h3>
+		</div>
+		<div class="modal-body">
+				<div class="control-group">
+					<label class="control-label" for="username">用户名：</label>
+					<div class="controls">
+						<input type="text" class="input-xlarge" id="username" name="username" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="password">密码：</label>
+					<div class="controls">
+						<input type="password" class="input-xlarge" id="password" name="password" />
+						<p></p>
+					</div>
+				</div>
+		</div>
+		<div class="modal-footer form-actions">
+			<button type="button" class="btn btn-primary login">登录</button>
+		</div>
+	</form>
+</div>
+<script type="text/javascript">
+	$('.loginButton').click(function(e){
+		$('#loginDialog').modal();
+	});
+	
+	$('.login').click(function(e){
+		var name = $('#username').val();
+		var password = $('#password').val();
+		$.ajax({  
+			type:'POST',
+			url: '/login',   
+			dataType: "json",  
+			data:'username=' + name + '&password=' + password,
+			cache: false, 
+			timeout: 5000,  
+			success: function(data) {  
+				console.log(data);
+ 				if(data.auth == 'error'){
+ 					$('#password').next('p').removeAttr('class').attr('class','help-block error').text('账号或密码错误');
+ 				}else{
+ 					window.location.href = '/';
+ 				} 
+			},  
+			error: function(jqXHR, textStatus, errorThrown) {  
+	 			$('#username').next('p').addClass('error').text('用户名坚持失败，服务器异常，请稍后再试吧');
+			}  
+		});
+
+	});
+
+	$('.publish').click(function(e){
+		var data = $('.weiboTextArea').val();
+		console.log(data);
+		$.ajax({  
+			type:'POST',
+			url: '/publish',   
+			dataType: "json",  
+			data:'content=' + data,
+			cache: false, 
+			timeout: 5000,  
+			success: function(data) {  
+				console.log(data);
+				if(data){
+					$('.row .span4:first-child').find('h2').text(data[0].author+' 说');
+					$('.row .span4:first-child').find('p').text(data[0].content);
+				}
+			},  
+			error: function(jqXHR, textStatus, errorThrown) {  
+	 			
+			}  
+		});
+	});
+	
+</script>
